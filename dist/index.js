@@ -37,3 +37,4 @@ app.use(express_1.default.json());
     });
 })();
 app.use('/auth', auth_routes_1.authRouter);
+//# sourceMappingURL=index.js.map

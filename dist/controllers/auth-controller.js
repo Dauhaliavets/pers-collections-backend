@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.check = exports.registration = exports.login = void 0;
+exports.registration = exports.login = void 0;
 const User_1 = require("../models/User");
 const hash_service_1 = require("../services/hash-service");
 const token_service_1 = require("../services/token-service");
@@ -28,7 +28,8 @@ const login = (request, response) => __awaiter(void 0, void 0, void 0, function*
             return response.status(400).json({ message: 'Unauthorized: Incorrect password' });
         }
         const token = (0, token_service_1.generateAccessToken)(String(foundedUser._id), foundedUser.username, foundedUser.role);
-        return response.status(200).json({ token });
+        const { role } = foundedUser;
+        return response.json({ username, role, token });
     }
     catch (error) {
         return response.status(400).json('Login error');
@@ -45,17 +46,13 @@ const registration = (request, response) => __awaiter(void 0, void 0, void 0, fu
         const hash = yield (0, hash_service_1.hashPassword)(password);
         const user = new User_1.User({ username, email, password: hash });
         yield user.save();
-        return response.json({ message: 'User created' });
+        const token = (0, token_service_1.generateAccessToken)(String(foundedUser._id), foundedUser.username, foundedUser.role);
+        const { role } = foundedUser;
+        return response.json({ username, role, token });
     }
     catch (error) {
         return response.status(400).json('Registration error');
     }
 });
 exports.registration = registration;
-const check = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        response.json('SERVER WORK');
-    }
-    catch (error) { }
-});
-exports.check = check;
+//# sourceMappingURL=auth-controller.js.map

@@ -13,3 +13,4 @@ const checkPassword = (password, hash) => {
     return bcrypt_1.default.compare(password, hash);
 };
 exports.checkPassword = checkPassword;
+//# sourceMappingURL=hash-service.js.map

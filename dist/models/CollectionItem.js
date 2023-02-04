@@ -28,3 +28,4 @@ const collectionItemSchema = new mongoose_1.Schema({
 });
 const CollectionItem = (0, mongoose_1.model)('items', collectionItemSchema);
 exports.CollectionItem = CollectionItem;
+//# sourceMappingURL=CollectionItem.js.map
