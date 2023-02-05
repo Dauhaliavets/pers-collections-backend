@@ -23,14 +23,14 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authRouter = void 0;
+exports.usersRouter = void 0;
 const express_1 = require("express");
 const userController = __importStar(require("../controllers/user-controller"));
 const roleMiddleware_1 = require("../middlewares/roleMiddleware");
-const authRouter = (0, express_1.Router)();
-exports.authRouter = authRouter;
-authRouter.get('/users', (0, roleMiddleware_1.roleMiddleware)(['ADMIN']), userController.getUsers);
-authRouter.get('/user/:id', (0, roleMiddleware_1.roleMiddleware)(['ADMIN']), userController.getUser);
-authRouter.delete('/user/:id', (0, roleMiddleware_1.roleMiddleware)(['ADMIN']), userController.deleteUser);
-authRouter.patch('/user/:id', (0, roleMiddleware_1.roleMiddleware)(['ADMIN']), userController.updateUser);
+const usersRouter = (0, express_1.Router)();
+exports.usersRouter = usersRouter;
+usersRouter.get('/', (0, roleMiddleware_1.roleMiddleware)(['ADMIN']), userController.getUsers);
+usersRouter.get('/:id', (0, roleMiddleware_1.roleMiddleware)(['ADMIN']), userController.getUser);
+usersRouter.delete('/:id', (0, roleMiddleware_1.roleMiddleware)(['ADMIN']), userController.deleteUser);
+usersRouter.patch('/:id', (0, roleMiddleware_1.roleMiddleware)(['ADMIN']), userController.updateUser);
 //# sourceMappingURL=user-routes.js.map

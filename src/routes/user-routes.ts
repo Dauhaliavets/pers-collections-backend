@@ -2,11 +2,11 @@ import { Router } from 'express';
 import * as userController from '../controllers/user-controller';
 import { roleMiddleware } from '../middlewares/roleMiddleware';
 
-const authRouter = Router();
+const usersRouter = Router();
 
-authRouter.get('/users', roleMiddleware(['ADMIN']), userController.getUsers);
-authRouter.get('/user/:id', roleMiddleware(['ADMIN']), userController.getUser);
-authRouter.delete('/user/:id', roleMiddleware(['ADMIN']), userController.deleteUser);
-authRouter.patch('/user/:id', roleMiddleware(['ADMIN']), userController.updateUser);
+usersRouter.get('/', roleMiddleware(['ADMIN']), userController.getUsers);
+usersRouter.get('/:id', roleMiddleware(['ADMIN']), userController.getUser);
+usersRouter.delete('/:id', roleMiddleware(['ADMIN']), userController.deleteUser);
+usersRouter.patch('/:id', roleMiddleware(['ADMIN']), userController.updateUser);
 
-export { authRouter };
+export { usersRouter };

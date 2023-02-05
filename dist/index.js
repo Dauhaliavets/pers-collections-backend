@@ -18,6 +18,7 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const auth_routes_1 = require("./routes/auth-routes");
+const user_routes_1 = require("./routes/user-routes");
 const PORT = process.env.PORT || 4000;
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
@@ -37,4 +38,5 @@ app.use(express_1.default.json());
     });
 })();
 app.use('/auth', auth_routes_1.authRouter);
+app.use('/users', user_routes_1.usersRouter);
 //# sourceMappingURL=index.js.map
