@@ -10,7 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.registration = exports.login = void 0;
-const User_1 = require("../models/User");
+const constants_1 = require("../constants");
+const User_1 = require("../models/schemas/User");
 const hash_service_1 = require("../services/hash-service");
 const token_service_1 = require("../services/token-service");
 const login = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
@@ -27,9 +28,13 @@ const login = (request, response) => __awaiter(void 0, void 0, void 0, function*
         if (!isValidPassword) {
             return response.status(400).json({ message: 'Unauthorized: Incorrect password' });
         }
-        const token = (0, token_service_1.generateAccessToken)(String(foundedUser._id), foundedUser.username, foundedUser.role);
-        const { role } = foundedUser;
-        return response.json({ username, role, token });
+        const userPayload = {
+            id: String(foundedUser._id),
+            username: foundedUser.username,
+            role: foundedUser.role,
+        };
+        const token = (0, token_service_1.generateAccessToken)(userPayload);
+        return response.json(Object.assign(Object.assign({}, foundedUser.toObject(constants_1.reshapingOptions)), { token }));
     }
     catch (error) {
         return response.status(400).json('Login error');
@@ -46,9 +51,13 @@ const registration = (request, response) => __awaiter(void 0, void 0, void 0, fu
         const hash = yield (0, hash_service_1.hashPassword)(password);
         const user = new User_1.User({ username, email, password: hash });
         yield user.save();
-        const token = (0, token_service_1.generateAccessToken)(String(foundedUser._id), foundedUser.username, foundedUser.role);
-        const { role } = foundedUser;
-        return response.json({ username, role, token });
+        const userPayload = {
+            id: String(user._id),
+            username: user.username,
+            role: user.role,
+        };
+        const token = (0, token_service_1.generateAccessToken)(userPayload);
+        return response.json(Object.assign(Object.assign({}, user.toObject(constants_1.reshapingOptions)), { token }));
     }
     catch (error) {
         return response.status(400).json('Registration error');

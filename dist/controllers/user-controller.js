@@ -10,11 +10,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateUser = exports.deleteUser = exports.getUser = exports.getUsers = void 0;
-const User_1 = require("../models/User");
+const constants_1 = require("../constants");
+const User_1 = require("../models/schemas/User");
 const getUsers = (_, response) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const foundedUsers = yield User_1.User.find({});
-        response.json(foundedUsers);
+        response.json(foundedUsers.map((user) => user.toObject(constants_1.reshapingOptions)));
     }
     catch (error) {
         return response.status(400).json('Find users error');
@@ -25,7 +26,7 @@ const getUser = (request, response) => __awaiter(void 0, void 0, void 0, functio
     try {
         const id = request.params.id;
         const foundedUser = yield User_1.User.findById(id);
-        response.json(foundedUser);
+        response.json(foundedUser.toObject(constants_1.reshapingOptions));
     }
     catch (error) {
         return response.status(400).json('Find user by id error');
@@ -36,7 +37,7 @@ const deleteUser = (request, response) => __awaiter(void 0, void 0, void 0, func
     try {
         const id = request.params.id;
         const deletedUser = yield User_1.User.findByIdAndDelete(id);
-        response.json(deletedUser);
+        response.json(deletedUser.toObject(constants_1.reshapingOptions));
     }
     catch (error) {
         return response.status(400).json('Delete user error');
@@ -47,7 +48,7 @@ const updateUser = (request, response) => __awaiter(void 0, void 0, void 0, func
     try {
         const { body, params: { id }, } = request;
         const updatedUser = yield User_1.User.findByIdAndUpdate(id, body);
-        response.json(updatedUser);
+        response.json(updatedUser.toObject(constants_1.reshapingOptions));
     }
     catch (error) {
         return response.status(400).json('Update user error');

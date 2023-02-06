@@ -6,8 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.validateAccessToken = exports.generateAccessToken = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const constants_1 = require("../constants");
-const generateAccessToken = (id, username, role) => {
-    const payload = { id, username, role };
+const generateAccessToken = (payload) => {
     return jsonwebtoken_1.default.sign(payload, constants_1.SECRET_KEY, { expiresIn: '60m' });
 };
 exports.generateAccessToken = generateAccessToken;

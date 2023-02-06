@@ -1,13 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Roles = exports.User = void 0;
+exports.User = void 0;
 const mongoose_1 = require("mongoose");
-var Roles;
-(function (Roles) {
-    Roles["USER"] = "USER";
-    Roles["ADMIN"] = "ADMIN";
-})(Roles || (Roles = {}));
-exports.Roles = Roles;
+const RoleModel_1 = require("../types/RoleModel");
 const userSchema = new mongoose_1.Schema({
     username: {
         type: String,
@@ -26,9 +21,9 @@ const userSchema = new mongoose_1.Schema({
     blockedStatus: Boolean,
     role: {
         type: String,
-        default: Roles.USER,
+        default: RoleModel_1.Roles.User,
     },
-});
+}, { versionKey: false });
 const User = (0, mongoose_1.model)('user', userSchema);
 exports.User = User;
 //# sourceMappingURL=User.js.map

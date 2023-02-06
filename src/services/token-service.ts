@@ -1,10 +1,9 @@
 import jwt from 'jsonwebtoken';
 import { ITokenPayload } from '../models/types/TokenPayload';
 import { SECRET_KEY } from '../constants';
+import { JwtPayload } from '../models/types/JwtPayload';
 
-const generateAccessToken = (id: string, username: string, role: string): string => {
-  const payload = { id, username, role };
-
+const generateAccessToken = (payload: JwtPayload): string => {
   return jwt.sign(payload, SECRET_KEY, { expiresIn: '60m' });
 };
 

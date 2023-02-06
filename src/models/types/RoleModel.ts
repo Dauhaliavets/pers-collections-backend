@@ -5,4 +5,4 @@ enum Roles {
 
 type TRole = `${Roles}`;
 
-export { TRole };
+export { Roles, TRole };

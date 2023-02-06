@@ -11,7 +11,7 @@ const collectionSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
-});
+}, { versionKey: false });
 const Collection = (0, mongoose_1.model)('collection', collectionSchema);
 exports.Collection = Collection;
 //# sourceMappingURL=Collection.js.map
