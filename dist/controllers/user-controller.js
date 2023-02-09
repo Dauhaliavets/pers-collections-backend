@@ -47,7 +47,7 @@ exports.deleteUser = deleteUser;
 const updateUser = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { body, params: { id }, } = request;
-        const updatedUser = yield User_1.User.findByIdAndUpdate(id, body);
+        const updatedUser = yield User_1.User.findByIdAndUpdate(id, body, { new: true });
         response.json(updatedUser.toObject(constants_1.reshapingOptions));
     }
     catch (error) {

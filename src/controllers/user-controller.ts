@@ -37,7 +37,7 @@ const updateUser = async (request: Request, response: Response) => {
       body,
       params: { id },
     } = request;
-    const updatedUser = await User.findByIdAndUpdate(id, body);
+    const updatedUser = await User.findByIdAndUpdate(id, body, { new: true });
     response.json(updatedUser.toObject(reshapingOptions));
   } catch (error) {
     return response.status(400).json('Update user error');

@@ -1,15 +1,24 @@
 import { Schema, model } from 'mongoose';
+import { extraFieldSchema } from './ExtraField';
 
 const collectionSchema = new Schema(
   {
-    title: {
-      type: String,
-      required: true,
-    },
     ownerId: {
       type: String,
       required: true,
     },
+    title: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
+    imageUrl: {
+      type: String,
+    },
+    extraFields: [extraFieldSchema],
   },
   { versionKey: false },
 );
