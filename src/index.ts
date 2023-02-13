@@ -5,6 +5,8 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import { authRouter } from './routes/auth-routes';
 import { usersRouter } from './routes/user-routes';
+import { collectionRouter } from './routes/collection-routes';
+import { collectionItemsRouter } from './routes/collectionItem-routes';
 
 const PORT = process.env.PORT || 4000;
 const app = express();
@@ -25,3 +27,5 @@ app.use(express.json());
 
 app.use('/auth', authRouter);
 app.use('/users', usersRouter);
+app.use('/collections', collectionRouter);
+app.use('/items', collectionItemsRouter);

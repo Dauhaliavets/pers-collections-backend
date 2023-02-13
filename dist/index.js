@@ -19,6 +19,8 @@ const cors_1 = __importDefault(require("cors"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const auth_routes_1 = require("./routes/auth-routes");
 const user_routes_1 = require("./routes/user-routes");
+const collection_routes_1 = require("./routes/collection-routes");
+const collectionItem_routes_1 = require("./routes/collectionItem-routes");
 const PORT = process.env.PORT || 4000;
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
@@ -39,4 +41,6 @@ app.use(express_1.default.json());
 })();
 app.use('/auth', auth_routes_1.authRouter);
 app.use('/users', user_routes_1.usersRouter);
+app.use('/collections', collection_routes_1.collectionRouter);
+app.use('/items', collectionItem_routes_1.collectionItemsRouter);
 //# sourceMappingURL=index.js.map

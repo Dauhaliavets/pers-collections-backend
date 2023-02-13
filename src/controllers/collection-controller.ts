@@ -10,6 +10,16 @@ const getCollections = async (_: Request, response: Response) => {
   }
 };
 
+const getCollectionsByUser = async (request: Request, response: Response) => {
+  try {
+    const ownerId = request.params.id;
+    const foundedCollection = await Collection.find({ ownerId });
+    response.json(foundedCollection);
+  } catch (error) {
+    return response.status(400).json('Find Collection by OWNER error');
+  }
+};
+
 const getCollection = async (request: Request, response: Response) => {
   try {
     const id = request.params.id;
@@ -17,6 +27,16 @@ const getCollection = async (request: Request, response: Response) => {
     response.json(foundedCollection);
   } catch (error) {
     return response.status(400).json('Find Collection by id error');
+  }
+};
+
+const createCollection = async (request: Request, response: Response) => {
+  try {
+    const newCollection = new Collection(request.body);
+    await newCollection.save();
+    response.json(newCollection);
+  } catch (error) {
+    return response.status(400).json('Create Collection error');
   }
 };
 
@@ -43,4 +63,4 @@ const updateCollection = async (request: Request, response: Response) => {
   }
 };
 
-export { getCollections, getCollection, deleteCollection, updateCollection };
+export { getCollections, getCollectionsByUser, getCollection, createCollection, deleteCollection, updateCollection };

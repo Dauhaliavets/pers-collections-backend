@@ -20,6 +20,6 @@ const collectionItemSchema = new mongoose_1.Schema({
     likes: [String],
     extraFields: [ExtraField_1.extraFieldSchema],
 }, { versionKey: false, strict: false });
-const CollectionItem = (0, mongoose_1.model)('items', collectionItemSchema);
+const CollectionItem = (0, mongoose_1.model)('item', collectionItemSchema);
 exports.CollectionItem = CollectionItem;
 //# sourceMappingURL=CollectionItem.js.map

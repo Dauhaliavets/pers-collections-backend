@@ -23,14 +23,16 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.collectionRouter = void 0;
+exports.collectionItemsRouter = void 0;
 const express_1 = require("express");
-const collectionController = __importStar(require("../controllers/collection-controller"));
+const itemController = __importStar(require("../controllers/item-controller"));
 const roleMiddleware_1 = require("../middlewares/roleMiddleware");
-const collectionRouter = (0, express_1.Router)();
-exports.collectionRouter = collectionRouter;
-collectionRouter.get('/', (0, roleMiddleware_1.roleMiddleware)(['ADMIN', 'USER']), collectionController.getCollections);
-collectionRouter.get('/:id', (0, roleMiddleware_1.roleMiddleware)(['ADMIN', 'USER']), collectionController.getCollection);
-collectionRouter.delete('/:id', (0, roleMiddleware_1.roleMiddleware)(['ADMIN', 'USER']), collectionController.deleteCollection);
-collectionRouter.patch('/:id', (0, roleMiddleware_1.roleMiddleware)(['ADMIN', 'USER']), collectionController.updateCollection);
-//# sourceMappingURL=collection-routers.js.map
+const collectionItemsRouter = (0, express_1.Router)();
+exports.collectionItemsRouter = collectionItemsRouter;
+collectionItemsRouter.get('/', itemController.getItems);
+collectionItemsRouter.get('/:id', itemController.getItem);
+collectionItemsRouter.get('/collectionId/:id', itemController.getItemsByCollectionId);
+collectionItemsRouter.post('/', (0, roleMiddleware_1.roleMiddleware)(['ADMIN', 'USER']), itemController.createItem);
+collectionItemsRouter.delete('/:id', (0, roleMiddleware_1.roleMiddleware)(['ADMIN', 'USER']), itemController.deleteItem);
+collectionItemsRouter.patch('/:id', (0, roleMiddleware_1.roleMiddleware)(['ADMIN', 'USER']), itemController.updateItem);
+//# sourceMappingURL=collectionItem-routes.js.map

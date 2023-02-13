@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateCollection = exports.deleteCollection = exports.getCollection = exports.getCollections = void 0;
+exports.updateCollection = exports.deleteCollection = exports.createCollection = exports.getCollection = exports.getCollectionsByUser = exports.getCollections = void 0;
 const Collection_1 = require("../models/schemas/Collection");
 const getCollections = (_, response) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -21,6 +21,17 @@ const getCollections = (_, response) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.getCollections = getCollections;
+const getCollectionsByUser = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const ownerId = request.params.id;
+        const foundedCollection = yield Collection_1.Collection.find({ ownerId });
+        response.json(foundedCollection);
+    }
+    catch (error) {
+        return response.status(400).json('Find Collection by OWNER error');
+    }
+});
+exports.getCollectionsByUser = getCollectionsByUser;
 const getCollection = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = request.params.id;
@@ -32,6 +43,17 @@ const getCollection = (request, response) => __awaiter(void 0, void 0, void 0, f
     }
 });
 exports.getCollection = getCollection;
+const createCollection = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const newCollection = new Collection_1.Collection(request.body);
+        yield newCollection.save();
+        response.json(newCollection);
+    }
+    catch (error) {
+        return response.status(400).json('Create Collection error');
+    }
+});
+exports.createCollection = createCollection;
 const deleteCollection = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const id = request.params.id;

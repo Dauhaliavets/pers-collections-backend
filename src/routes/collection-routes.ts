@@ -4,8 +4,10 @@ import { roleMiddleware } from '../middlewares/roleMiddleware';
 
 const collectionRouter = Router();
 
-collectionRouter.get('/', roleMiddleware(['ADMIN', 'USER']), collectionController.getCollections);
-collectionRouter.get('/:id', roleMiddleware(['ADMIN', 'USER']), collectionController.getCollection);
+collectionRouter.get('/', collectionController.getCollections);
+collectionRouter.get('/ownerId/:id', collectionController.getCollectionsByUser);
+collectionRouter.get('/:id', collectionController.getCollection);
+collectionRouter.post('/', roleMiddleware(['ADMIN', 'USER']), collectionController.createCollection);
 collectionRouter.delete('/:id', roleMiddleware(['ADMIN', 'USER']), collectionController.deleteCollection);
 collectionRouter.patch('/:id', roleMiddleware(['ADMIN', 'USER']), collectionController.updateCollection);
 

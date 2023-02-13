@@ -1,32 +1,26 @@
 import { Schema, model } from 'mongoose';
+import { extraFieldSchema } from './ExtraField';
 
 const collectionItemSchema = new Schema(
   {
-    title: {
-      type: String,
-      required: true,
-    },
     collectionId: {
       type: String,
       required: true,
     },
-    topic: {
+    title: {
       type: String,
       required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
-    imageSrc: {
-      type: String,
     },
     tags: {
       type: [String],
+      required: true,
     },
+    comments: [String],
+    likes: [String],
+    extraFields: [extraFieldSchema],
   },
-  { versionKey: false },
+  { versionKey: false, strict: false },
 );
 
-const CollectionItem = model('items', collectionItemSchema);
+const CollectionItem = model('item', collectionItemSchema);
 export { CollectionItem };
