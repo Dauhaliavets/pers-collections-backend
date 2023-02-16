@@ -35,4 +35,5 @@ collectionItemsRouter.get('/collectionId/:id', itemController.getItemsByCollecti
 collectionItemsRouter.post('/', (0, roleMiddleware_1.roleMiddleware)(['ADMIN', 'USER']), itemController.createItem);
 collectionItemsRouter.delete('/:id', (0, roleMiddleware_1.roleMiddleware)(['ADMIN', 'USER']), itemController.deleteItem);
 collectionItemsRouter.patch('/:id', (0, roleMiddleware_1.roleMiddleware)(['ADMIN', 'USER']), itemController.updateItem);
+collectionItemsRouter.post('/:id/comment', (0, roleMiddleware_1.roleMiddleware)(['ADMIN', 'USER']), itemController.addCommentToItem);
 //# sourceMappingURL=collectionItem-routes.js.map

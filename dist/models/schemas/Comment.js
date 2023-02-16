@@ -1,12 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.commentSchema = void 0;
+exports.Comment = exports.commentSchema = void 0;
 const mongoose_1 = require("mongoose");
 const commentSchema = new mongoose_1.Schema({
-    itemId: {
-        type: String,
-        required: true,
-    },
     sender: {
         type: String,
         required: true,
@@ -15,6 +11,8 @@ const commentSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
-}, { versionKey: false, strict: false, timestamps: { createdAt: true, updatedAt: false } });
+}, { versionKey: false, timestamps: { createdAt: true, updatedAt: false } });
 exports.commentSchema = commentSchema;
+const Comment = (0, mongoose_1.model)('comment', commentSchema);
+exports.Comment = Comment;
 //# sourceMappingURL=Comment.js.map

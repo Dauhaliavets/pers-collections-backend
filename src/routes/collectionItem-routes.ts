@@ -10,5 +10,6 @@ collectionItemsRouter.get('/collectionId/:id', itemController.getItemsByCollecti
 collectionItemsRouter.post('/', roleMiddleware(['ADMIN', 'USER']), itemController.createItem);
 collectionItemsRouter.delete('/:id', roleMiddleware(['ADMIN', 'USER']), itemController.deleteItem);
 collectionItemsRouter.patch('/:id', roleMiddleware(['ADMIN', 'USER']), itemController.updateItem);
+collectionItemsRouter.post('/:id/comment', roleMiddleware(['ADMIN', 'USER']), itemController.addCommentToItem);
 
 export { collectionItemsRouter };

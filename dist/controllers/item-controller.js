@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateItem = exports.deleteItem = exports.createItem = exports.getItem = exports.getItemsByCollectionId = exports.getItems = void 0;
+exports.addCommentToItem = exports.updateItem = exports.deleteItem = exports.createItem = exports.getItem = exports.getItemsByCollectionId = exports.getItems = void 0;
 const CollectionItem_1 = require("../models/schemas/CollectionItem");
 const getItems = (_, response) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -76,4 +76,19 @@ const updateItem = (request, response) => __awaiter(void 0, void 0, void 0, func
     }
 });
 exports.updateItem = updateItem;
+const addCommentToItem = (request, response) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { body, params: { id }, } = request;
+        const io = request.app.get('socket');
+        const updatedItem = yield CollectionItem_1.CollectionItem.findByIdAndUpdate(id, { $push: { comments: body } }, {
+            new: true,
+        });
+        io.emit('new-comment', updatedItem);
+        response.json(updatedItem);
+    }
+    catch (error) {
+        return response.status(400).json('Create Item Comment error');
+    }
+});
+exports.addCommentToItem = addCommentToItem;
 //# sourceMappingURL=item-controller.js.map

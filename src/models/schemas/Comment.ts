@@ -1,11 +1,7 @@
-import { Schema } from 'mongoose';
+import { model, Schema } from 'mongoose';
 
 const commentSchema = new Schema(
   {
-    itemId: {
-      type: String,
-      required: true,
-    },
     sender: {
       type: String,
       required: true,
@@ -15,7 +11,9 @@ const commentSchema = new Schema(
       required: true,
     },
   },
-  { versionKey: false, strict: false, timestamps: { createdAt: true, updatedAt: false } },
+  { versionKey: false, timestamps: { createdAt: true, updatedAt: false } },
 );
 
-export { commentSchema };
+const Comment = model('comment', commentSchema);
+
+export { commentSchema, Comment };

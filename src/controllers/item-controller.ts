@@ -63,4 +63,27 @@ const updateItem = async (request: Request, response: Response) => {
   }
 };
 
-export { getItems, getItemsByCollectionId, getItem, createItem, deleteItem, updateItem };
+const addCommentToItem = async (request: Request, response: Response) => {
+  try {
+    const {
+      body,
+      params: { id },
+    } = request;
+
+    const io = request.app.get('socket');
+
+    const updatedItem = await CollectionItem.findByIdAndUpdate(
+      id,
+      { $push: { comments: body } },
+      {
+        new: true,
+      },
+    );
+    io.emit('new-comment', updatedItem);
+    response.json(updatedItem);
+  } catch (error) {
+    return response.status(400).json('Create Item Comment error');
+  }
+};
+
+export { getItems, getItemsByCollectionId, getItem, createItem, deleteItem, updateItem, addCommentToItem };
