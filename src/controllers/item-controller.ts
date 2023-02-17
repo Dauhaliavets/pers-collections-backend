@@ -20,10 +20,10 @@ const getItemsByCollectionId = async (request: Request, response: Response) => {
   }
 };
 
-const getItem = async (request: Request, response: Response) => {
+const getItemById = async (request: Request, response: Response) => {
   try {
     const id = request.params.id;
-    const foundedItem = await CollectionItem.findById({ _id: id });
+    const foundedItem = await CollectionItem.findById(id);
     response.json(foundedItem);
   } catch (error) {
     return response.status(400).json('Find Item by id error');
@@ -40,17 +40,17 @@ const createItem = async (request: Request, response: Response) => {
   }
 };
 
-const deleteItem = async (request: Request, response: Response) => {
+const deleteItemById = async (request: Request, response: Response) => {
   try {
     const id = request.params.id;
-    const deletedItem = await CollectionItem.findByIdAndDelete({ _id: id });
+    const deletedItem = await CollectionItem.findByIdAndDelete(id);
     response.json(deletedItem);
   } catch (error) {
     return response.status(400).json('Delete Item error');
   }
 };
 
-const updateItem = async (request: Request, response: Response) => {
+const updateItemById = async (request: Request, response: Response) => {
   try {
     const {
       body,
@@ -86,4 +86,4 @@ const addCommentToItem = async (request: Request, response: Response) => {
   }
 };
 
-export { getItems, getItemsByCollectionId, getItem, createItem, deleteItem, updateItem, addCommentToItem };
+export { getItems, getItemsByCollectionId, getItemById, createItem, deleteItemById, updateItemById, addCommentToItem };

@@ -15,6 +15,10 @@ const collectionSchema = new Schema(
       type: String,
       required: true,
     },
+    topic: {
+      type: String,
+      required: true,
+    },
     imageUrl: {
       type: String,
     },

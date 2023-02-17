@@ -6,9 +6,9 @@ const collectionRouter = Router();
 
 collectionRouter.get('/', collectionController.getCollections);
 collectionRouter.get('/ownerId/:id', collectionController.getCollectionsByUser);
-collectionRouter.get('/:id', collectionController.getCollection);
+collectionRouter.get('/:id', collectionController.getCollectionById);
 collectionRouter.post('/', roleMiddleware(['ADMIN', 'USER']), collectionController.createCollection);
-collectionRouter.delete('/:id', roleMiddleware(['ADMIN', 'USER']), collectionController.deleteCollection);
-collectionRouter.patch('/:id', roleMiddleware(['ADMIN', 'USER']), collectionController.updateCollection);
+collectionRouter.delete('/:id', roleMiddleware(['ADMIN', 'USER']), collectionController.deleteCollectionById);
+collectionRouter.patch('/:id', roleMiddleware(['ADMIN', 'USER']), collectionController.updateCollectionById);
 
 export { collectionRouter };

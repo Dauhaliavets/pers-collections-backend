@@ -20,7 +20,7 @@ const getCollectionsByUser = async (request: Request, response: Response) => {
   }
 };
 
-const getCollection = async (request: Request, response: Response) => {
+const getCollectionById = async (request: Request, response: Response) => {
   try {
     const id = request.params.id;
     const foundedCollection = await Collection.findById(id);
@@ -40,7 +40,7 @@ const createCollection = async (request: Request, response: Response) => {
   }
 };
 
-const deleteCollection = async (request: Request, response: Response) => {
+const deleteCollectionById = async (request: Request, response: Response) => {
   try {
     const id = request.params.id;
     const deletedCollection = await Collection.findByIdAndDelete(id);
@@ -50,7 +50,7 @@ const deleteCollection = async (request: Request, response: Response) => {
   }
 };
 
-const updateCollection = async (request: Request, response: Response) => {
+const updateCollectionById = async (request: Request, response: Response) => {
   try {
     const {
       body,
@@ -63,4 +63,11 @@ const updateCollection = async (request: Request, response: Response) => {
   }
 };
 
-export { getCollections, getCollectionsByUser, getCollection, createCollection, deleteCollection, updateCollection };
+export {
+  getCollections,
+  getCollectionsByUser,
+  getCollectionById,
+  createCollection,
+  deleteCollectionById,
+  updateCollectionById,
+};
