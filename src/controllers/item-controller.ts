@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { CollectionItem } from '../models/schemas/CollectionItem';
+import * as itemService from '../services/item-service';
 
 const getItems = async (_: Request, response: Response) => {
   try {
-    const foundedItems = await CollectionItem.find({});
+    const foundedItems = await itemService.findItems();
     response.json(foundedItems);
   } catch (error) {
     return response.status(400).json('Find Items error');
@@ -12,8 +12,7 @@ const getItems = async (_: Request, response: Response) => {
 
 const getItemsByCollectionId = async (request: Request, response: Response) => {
   try {
-    const collectionId = request.params.id;
-    const foundedItem = await CollectionItem.find({ collectionId });
+    const foundedItem = await itemService.findItemsByParams({ collectionId: request.params.id });
     response.json(foundedItem);
   } catch (error) {
     return response.status(400).json('Find Items by collectionId error');
@@ -22,8 +21,7 @@ const getItemsByCollectionId = async (request: Request, response: Response) => {
 
 const getItemById = async (request: Request, response: Response) => {
   try {
-    const id = request.params.id;
-    const foundedItem = await CollectionItem.findById(id);
+    const foundedItem = await itemService.findItemById(request.params.id);
     response.json(foundedItem);
   } catch (error) {
     return response.status(400).json('Find Item by id error');
@@ -32,8 +30,7 @@ const getItemById = async (request: Request, response: Response) => {
 
 const createItem = async (request: Request, response: Response) => {
   try {
-    const newItem = new CollectionItem(request.body);
-    await newItem.save();
+    const newItem = await itemService.createItem(request.body);
     response.json(newItem);
   } catch (error) {
     return response.status(400).json('Create Item error');
@@ -42,8 +39,7 @@ const createItem = async (request: Request, response: Response) => {
 
 const deleteItemById = async (request: Request, response: Response) => {
   try {
-    const id = request.params.id;
-    const deletedItem = await CollectionItem.findByIdAndDelete(id);
+    const deletedItem = await itemService.deleteItemById(request.params.id);
     response.json(deletedItem);
   } catch (error) {
     return response.status(400).json('Delete Item error');
@@ -56,7 +52,7 @@ const updateItemById = async (request: Request, response: Response) => {
       body,
       params: { id },
     } = request;
-    const updatedItem = await CollectionItem.findByIdAndUpdate(id, body, { new: true });
+    const updatedItem = await itemService.updateItemById(id, body);
     response.json(updatedItem);
   } catch (error) {
     return response.status(400).json('Update Item error');
@@ -66,19 +62,13 @@ const updateItemById = async (request: Request, response: Response) => {
 const addCommentToItem = async (request: Request, response: Response) => {
   try {
     const {
-      body,
+      body: comment,
       params: { id },
     } = request;
 
     const io = request.app.get('socket');
 
-    const updatedItem = await CollectionItem.findByIdAndUpdate(
-      id,
-      { $push: { comments: body } },
-      {
-        new: true,
-      },
-    );
+    const updatedItem = await itemService.updateCommentByItemId(id, comment);
     io.emit('new-comment', updatedItem);
     response.json(updatedItem);
   } catch (error) {

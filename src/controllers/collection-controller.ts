@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { Collection } from '../models/schemas/Collection';
+import * as collectionService from '../services/collection-service';
 
 const getCollections = async (_: Request, response: Response) => {
   try {
-    const foundedCollections = await Collection.find({});
+    const foundedCollections = await collectionService.findCollections();
     response.json(foundedCollections);
   } catch (error) {
     return response.status(400).json('Find Collections error');
@@ -12,8 +12,7 @@ const getCollections = async (_: Request, response: Response) => {
 
 const getCollectionsByUser = async (request: Request, response: Response) => {
   try {
-    const ownerId = request.params.id;
-    const foundedCollection = await Collection.find({ ownerId });
+    const foundedCollection = await collectionService.findCollectionByParams({ ownerId: request.params.id });
     response.json(foundedCollection);
   } catch (error) {
     return response.status(400).json('Find Collection by OWNER error');
@@ -22,8 +21,7 @@ const getCollectionsByUser = async (request: Request, response: Response) => {
 
 const getCollectionById = async (request: Request, response: Response) => {
   try {
-    const id = request.params.id;
-    const foundedCollection = await Collection.findById(id);
+    const foundedCollection = await collectionService.findCollectionById(request.params.id);
     response.json(foundedCollection);
   } catch (error) {
     return response.status(400).json('Find Collection by id error');
@@ -32,8 +30,7 @@ const getCollectionById = async (request: Request, response: Response) => {
 
 const createCollection = async (request: Request, response: Response) => {
   try {
-    const newCollection = new Collection(request.body);
-    await newCollection.save();
+    const newCollection = await collectionService.createCollection(request.body);
     response.json(newCollection);
   } catch (error) {
     return response.status(400).json('Create Collection error');
@@ -42,8 +39,7 @@ const createCollection = async (request: Request, response: Response) => {
 
 const deleteCollectionById = async (request: Request, response: Response) => {
   try {
-    const id = request.params.id;
-    const deletedCollection = await Collection.findByIdAndDelete(id);
+    const deletedCollection = await collectionService.deleteCollectionById(request.params.id);
     response.json(deletedCollection);
   } catch (error) {
     return response.status(400).json('Delete Collection error');
@@ -56,7 +52,7 @@ const updateCollectionById = async (request: Request, response: Response) => {
       body,
       params: { id },
     } = request;
-    const updatedCollection = await Collection.findByIdAndUpdate(id, body, { new: true });
+    const updatedCollection = await collectionService.updateCollectionById(id, body);
     response.json(updatedCollection);
   } catch (error) {
     return response.status(400).json('Update Collection error');
