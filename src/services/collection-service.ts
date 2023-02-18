@@ -28,8 +28,8 @@ export const deleteCollectionsByParams = async (params: any) => {
 
   for (const collection of collections) {
     const collectionId = collection._id.toString();
-    itemService.deleteItemsByParams({ collectionId });
-    deleteCollectionById(collectionId);
+    await itemService.deleteItemsByParams({ collectionId });
+    await deleteCollectionById(collectionId);
   }
 };
 

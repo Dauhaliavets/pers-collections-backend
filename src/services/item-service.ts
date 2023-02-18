@@ -27,7 +27,7 @@ export const deleteItemsByParams = async (params: any) => {
   const items = await findItemsByParams(params);
 
   for (const item of items) {
-    deleteItemById(item._id.toString());
+    await deleteItemById(item._id.toString());
   }
 };
 

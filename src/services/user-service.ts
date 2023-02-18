@@ -19,8 +19,8 @@ export const findUserById = (id: string) => {
   return User.findById(id);
 };
 
-export const deleteUserById = (id: string) => {
-  collectionService.deleteCollectionsByParams({ ownerId: id });
+export const deleteUserById = async (id: string) => {
+  await collectionService.deleteCollectionsByParams({ ownerId: id });
   return User.findByIdAndDelete(id);
 };
 
