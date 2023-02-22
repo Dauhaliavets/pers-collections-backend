@@ -15,12 +15,12 @@ const PORT = process.env.PORT || 4000;
 const app = express();
 
 const httpServer = createServer(app);
-const io = new Server(httpServer, {
-  cors: {
-    origin: '*',
-  },
-});
-app.set('socket', io);
+// const io = new Server(httpServer, {
+//   cors: {
+//     origin: '*',
+//   },
+// });
+// app.set('socket', io);
 
 app.use(express.json());
 app.use(cors());
