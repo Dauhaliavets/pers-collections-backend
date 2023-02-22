@@ -30,7 +30,15 @@ const getCollectionById = async (request: Request, response: Response) => {
 
 const createCollection = async (request: Request, response: Response) => {
   try {
-    const newCollection = await collectionService.createCollection(request.body);
+    const { ownerId, title, description, topic, imageUrl, extraFields } = request.body;
+    const newCollection = await collectionService.createCollection({
+      ownerId,
+      title,
+      description,
+      topic,
+      imageUrl,
+      extraFields,
+    });
 
     response.json(newCollection);
   } catch (error) {
