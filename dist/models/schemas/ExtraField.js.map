@@ -1,1 +1,0 @@
-{"version":3,"file":"ExtraField.js","sourceRoot":"","sources":["../../../src/models/schemas/ExtraField.ts"],"names":[],"mappings":";;;AAAA,uCAAkC;AAElC,MAAM,gBAAgB,GAAG,IAAI,iBAAM,CAAC;IAClC,EAAE,EAAE,MAAM;IACV,IAAI,EAAE,MAAM;IACZ,KAAK,EAAE,MAAM;IACb,KAAK,EAAE,iBAAM,CAAC,KAAK,CAAC,KAAK;IACzB,OAAO,EAAE,OAAO;CACjB,CAAC,CAAC;AAEM,4CAAgB"}
