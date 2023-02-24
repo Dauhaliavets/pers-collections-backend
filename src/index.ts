@@ -10,6 +10,7 @@ import { authRouter } from './routes/auth-routes';
 import { usersRouter } from './routes/user-routes';
 import { collectionRouter } from './routes/collection-routes';
 import { collectionItemsRouter } from './routes/collectionItem-routes';
+import { searchRouter } from './routes/search-routes';
 
 const PORT = process.env.PORT || 4000;
 const app = express();
@@ -29,6 +30,7 @@ app.use('/auth', authRouter);
 app.use('/users', usersRouter);
 app.use('/collections', collectionRouter);
 app.use('/items', collectionItemsRouter);
+app.use('/search', searchRouter);
 
 (async function () {
   try {

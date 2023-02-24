@@ -44,3 +44,23 @@ export const updateCommentByItemId = (id: string, newComment: any) => {
     },
   );
 };
+
+export const searchItemsByQuery = async (query: string) => {
+  const foundedItems = await CollectionItem.aggregate()
+    .search({
+      index: 'itemsIndex',
+      text: {
+        query: query,
+        path: ['title', 'tags', { value: 'extraFields.value' }, { value: 'comments.text' }],
+      },
+    })
+    .project({
+      _id: 1,
+      title: 1,
+      tags: 1,
+      comments: 1,
+      extraFields: 1,
+    });
+
+  return foundedItems;
+};

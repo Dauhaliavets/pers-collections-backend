@@ -1,18 +1,16 @@
 import { model, Schema } from 'mongoose';
 
-const commentSchema = new Schema(
-  {
-    sender: {
-      type: String,
-      required: true,
-    },
-    text: {
-      type: String,
-      required: true,
-    },
+const commentSchema = new Schema({
+  sender: {
+    type: String,
+    required: true,
   },
-  { versionKey: false, timestamps: { createdAt: true, updatedAt: false } },
-);
+  text: {
+    type: String,
+    required: true,
+  },
+  createdDate: String,
+});
 
 const Comment = model('comment', commentSchema);
 
