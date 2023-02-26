@@ -53,14 +53,49 @@ export const searchItemsByQuery = async (query: string) => {
         query: query,
         path: ['title', 'tags', { value: 'extraFields.value' }, { value: 'comments.text' }],
       },
+      highlight: {
+        path: ['title', 'tags', 'extraFields.value', 'comments.text'],
+      },
     })
     .project({
       _id: 1,
+      collectionId: 1,
       title: 1,
       tags: 1,
       comments: 1,
       extraFields: 1,
+      highlights: {
+        $meta: 'searchHighlights',
+      },
     });
 
   return foundedItems;
+};
+
+export const searchTagsByQuery = async (query: string) => {
+  const foundedTags = await CollectionItem.aggregate()
+    .search({
+      index: 'tagsIndex',
+      autocomplete: {
+        query: query,
+        path: 'tags',
+        tokenOrder: 'any',
+        fuzzy: {
+          maxEdits: 1,
+          maxExpansions: 10,
+        },
+      },
+      highlight: {
+        path: 'tags',
+      },
+    })
+    .project({
+      _id: 0,
+      tags: 1,
+      highlights: {
+        $meta: 'searchHighlights',
+      },
+    });
+
+  return foundedTags;
 };
