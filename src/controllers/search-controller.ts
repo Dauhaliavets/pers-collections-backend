@@ -14,8 +14,13 @@ const searchItems = async (request: Request, response: Response) => {
 const searchTags = async (request: Request, response: Response) => {
   try {
     const query = request.query.query as string;
-    const foundedItems = await itemService.searchTagsByQuery(query);
-    response.json(foundedItems);
+    if (query) {
+      const foundedTags = await itemService.searchTagsByQuery(query);
+      response.json(foundedTags);
+    } else {
+      const tagsCloud = await itemService.getTagsCloud();
+      response.json(tagsCloud);
+    }
   } catch (error) {
     return response.status(400).json('Search items error');
   }

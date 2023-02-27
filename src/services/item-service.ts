@@ -1,5 +1,5 @@
 import { CollectionItem } from '../models/schemas/CollectionItem';
-import { ObjectId } from 'mongodb';
+import { ICloudTag } from '../models/types/CloudTags';
 
 export const createItem = async (params: any) => {
   const newItem = new CollectionItem(params);
@@ -63,6 +63,7 @@ export const searchItemsByQuery = async (query: string) => {
       title: 1,
       tags: 1,
       comments: 1,
+      likes: 1,
       extraFields: 1,
       highlights: {
         $meta: 'searchHighlights',
@@ -98,4 +99,26 @@ export const searchTagsByQuery = async (query: string) => {
     });
 
   return foundedTags;
+};
+
+export const getTagsCloud = async () => {
+  const foundedItems = await CollectionItem.find({}, { tags: 1, _id: 0 });
+  const tagsList = foundedItems.map((item) => item.tags).flatMap((tag) => tag);
+
+  const cloudTags: ICloudTag[] = tagsList.reduce((acc, tag) => {
+    const index = acc.findIndex((item) => item.value === tag);
+    if (index !== -1) {
+      const newCount = acc[index].count + 1;
+      const updatedElement = { ...acc[index], count: newCount };
+      acc[index] = updatedElement;
+    } else {
+      const newElement = { value: tag, count: 1 };
+      acc.push(newElement);
+    }
+    return acc;
+  }, []);
+
+  cloudTags.sort((first, second) => second.count - first.count);
+
+  return cloudTags;
 };
