@@ -22,7 +22,7 @@ const roleMiddleware = (roles: TRole[]) => {
       }
       return response.status(403).json({ message: 'Missed header "Authorization"' });
     } catch (error) {
-      error.name;
+      return response.status(400).json({ message: `Bad request. Message: ${error.name}` });
     }
   };
 };

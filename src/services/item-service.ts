@@ -65,6 +65,7 @@ export const searchItemsByQuery = async (query: string) => {
       comments: 1,
       likes: 1,
       extraFields: 1,
+      createdAt: 1,
       highlights: {
         $meta: 'searchHighlights',
       },
