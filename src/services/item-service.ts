@@ -1,3 +1,4 @@
+import { ITagsByQueryResponse } from '../models/types/TagsResponse';
 import { CollectionItem } from '../models/schemas/CollectionItem';
 import { ICloudTag } from '../models/types/CloudTags';
 
@@ -75,7 +76,7 @@ export const searchItemsByQuery = async (query: string) => {
 };
 
 export const searchTagsByQuery = async (query: string) => {
-  const foundedTags = await CollectionItem.aggregate()
+  const response: ITagsByQueryResponse[] = await CollectionItem.aggregate()
     .search({
       index: 'tagsIndex',
       autocomplete: {
@@ -99,7 +100,11 @@ export const searchTagsByQuery = async (query: string) => {
       },
     });
 
-  return foundedTags;
+  const tags = response.flatMap((item) =>
+    item.highlights.flatMap((highlight) => highlight.texts.map((text) => text.value)),
+  );
+
+  return tags;
 };
 
 export const getTagsCloud = async () => {
