@@ -3,6 +3,7 @@ import { reshapingOptions } from '../constants';
 import * as userService from '../services/user-service';
 import * as hashService from '../services/hash-service';
 import * as tokenService from '../services/token-service';
+import { verifyGoogleToken } from '../services/token-service';
 
 const login = async (request: Request, response: Response) => {
   try {
@@ -42,7 +43,7 @@ const registration = async (request: Request, response: Response) => {
     const foundedUser = await userService.findOneUser({ username });
 
     if (foundedUser) {
-      return response.status(409).json({ message: `User ${username} already exists` });
+      return response.status(409).json(`User ${username} already exists`);
     }
 
     const hash = await hashService.hashPassword(password);
@@ -65,4 +66,41 @@ const registration = async (request: Request, response: Response) => {
   }
 };
 
-export { login, registration };
+const authWithGoogle = async (request: Request, response: Response) => {
+  try {
+    const { credential } = request.body;
+
+    const verificationResponse = await verifyGoogleToken(credential);
+
+    if (verificationResponse.error) {
+      return response.status(400).json(verificationResponse.error);
+    }
+
+    const { name, email } = verificationResponse?.payload;
+
+    let user;
+    user = await userService.findOneUser({ username: name, email });
+
+    if (!user) {
+      user = await userService.createUser({ username: name, email });
+    }
+    if (user.blockedStatus) {
+      return response.status(400).json({ message: 'Forbidden: Access is Forbidden' });
+    }
+
+    const userPayload = {
+      id: String(user._id),
+      username: user.username,
+      role: user.role,
+    };
+    const token = tokenService.generateAccessToken(userPayload);
+    return response.json({
+      ...user.toObject(reshapingOptions),
+      token,
+    });
+  } catch (error) {
+    return response.status(400).json('Login error');
+  }
+};
+
+export { login, registration, authWithGoogle };

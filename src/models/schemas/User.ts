@@ -13,11 +13,11 @@ const userSchema = new Schema(
       unique: true,
       required: true,
     },
-    password: {
-      type: String,
-      required: true,
+    password: String,
+    blockedStatus: {
+      type: Boolean,
+      default: false,
     },
-    blockedStatus: Boolean,
     role: {
       type: String,
       default: Roles.User,
